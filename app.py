@@ -610,34 +610,47 @@ with st.sidebar:
             try:
                 with st.spinner("Connecting..."):
                     encoded_password = quote_plus(password)
-                    mysql_uri = f"mysql+pymysql://{username}:{encoded_password}@{host}:{int(port)}/{database}"
+                    
+                mysql_uri = f"mysql+pymysql://{username}:{encoded_password}@{host}:{int(port)}/{database}"
 
-                    # ── FIX: Railway MySQL timeout handling ──
-                    # Railway apne idle connections ~300 sec mein kill kar deta hai.
-                    # pool_pre_ping: har query se pehle connection check karta hai
-                    # pool_recycle: 280 sec baad connection khud refresh kar lo
-                    # connect_timeout: agar server respond na kare toh 10 sec mein fail ho
-                    db = SQLDatabase.from_uri(
-                        mysql_uri,
-                        sample_rows_in_table_info=2,
-                        engine_args={
-                            "pool_pre_ping": True,
-                            "pool_recycle": 280,
-                            "connect_args": {"connect_timeout": 10}
-                        }
-                    )
+# Configure connection settings
+                connect_args = {"connect_timeout": 10}
 
-                    llm = ChatGroq(
+# Enable SSL for cloud MySQL connections (Aiven)
+                if host.strip().lower() not in ("localhost", "127.0.0.1"):
+                    from pathlib import Path
+
+                    ca_path = Path(__file__).parent / "ca.pem"
+
+                    if not ca_path.exists():
+                        raise FileNotFoundError(
+                            f"SSL certificate not found: {ca_path}"
+                        )
+
+                    connect_args["ssl"] = {"ca": str(ca_path)}
+
+                db = SQLDatabase.from_uri(
+                    mysql_uri,
+                    sample_rows_in_table_info=2,
+                    engine_args={
+                        "pool_pre_ping": True,
+                        "pool_recycle": 280,
+                        "connect_args": connect_args
+                    }
+                )
+
+
+                llm = ChatGroq(
                         model="openai/gpt-oss-20b",
                         api_key=groq_key,
                         temperature=0,
                         max_tokens=1024,
                     )
 
-                    st.session_state.db = db
-                    st.session_state.llm = llm
-                    st.session_state.connected = True
-                    st.session_state.tables = db.get_usable_table_names()
+                st.session_state.db = db
+                st.session_state.llm = llm
+                st.session_state.connected = True
+                st.session_state.tables = db.get_usable_table_names()
 
                 st.success("Connected successfully.")
                 st.info(f"Tables: {', '.join(st.session_state.tables)}")
