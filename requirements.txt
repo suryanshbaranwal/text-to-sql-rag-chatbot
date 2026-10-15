@@ -1,0 +1,14 @@
+
+streamlit
+pandas
+numpy
+sqlalchemy
+pymysql
+python-dotenv
+langchain
+langchain-core
+langchain-community
+langchain-groq
+langchain-huggingface
+sentence-transformers
+faiss-cpu

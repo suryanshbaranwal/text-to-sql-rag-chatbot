@@ -1,0 +1,24 @@
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Streamlit
+.streamlit/secrets.toml
+
+# IDE and OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Backup folders
+text-to-sql-chatbot-backup/
