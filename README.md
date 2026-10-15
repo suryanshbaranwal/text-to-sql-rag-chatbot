@@ -45,17 +45,17 @@ To use the application, provide your own MySQL connection details and Groq API k
 
 ## 🛠️ Tech Stack
 
-| Component | Technology |
-|---|---|
-| Programming Language | Python |
-| Web Interface | Streamlit |
-| LLM Provider | Groq API |
-| LLM Framework | LangChain |
-| Database | MySQL |
-| Database Connectivity | SQLAlchemy, PyMySQL |
-| Embeddings | Hugging Face Sentence Transformers |
-| Vector Search | FAISS |
-| Data Processing | Pandas, NumPy |
+| Component | Technology | Why Used |
+|---|---|---|
+| Programming Language | Python | AI and data processing |
+| Web Interface | Streamlit | Interactive chatbot UI |
+| LLM Provider | Groq API | Fast AI inference |
+| LLM Framework | LangChain | LLM and database integration |
+| Database | MySQL | Store structured data |
+| Database Connectivity | SQLAlchemy, PyMySQL | Connect Python with MySQL |
+| Embeddings | Hugging Face Sentence Transformers | Convert text into vectors |
+| Vector Search | FAISS | Retrieve relevant schema |
+| Data Processing | Pandas, NumPy | Process query results |
 
 ## 🏗️ How It Works
 
@@ -84,60 +84,6 @@ Try asking:
 - `How many orders are there in the database?`
 
 The actual results depend on the connected database and its data.
-
-## 🚀 Run Locally
-
-### Prerequisites
-
-- Python 3.10+ (Python 3.12 has been tested)
-- MySQL Server or access to a MySQL database
-- A Groq API key
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/suryanshbaranwal/text-to-sql-rag-chatbot.git
-cd text-to-sql-rag-chatbot
-```
-
-### 2. Create a virtual environment
-
-```bash
-python -m venv .venv
-```
-
-Activate it on Windows PowerShell:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-### 3. Install dependencies
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-### 4. Start the application
-
-```bash
-python -m streamlit run app.py
-```
-
-Open the local URL shown in the terminal, usually `http://localhost:8501`.
-
-### 5. Connect your database
-
-Enter your MySQL host, port, username, password, database name, and Groq API key in the application's sidebar.
-
-For cloud MySQL connections, configure the required SSL certificate as documented in the project.
-
-## 🔐 Security Notes
-
-- Never commit database passwords, Groq API keys, or other secrets to GitHub.
-- Use a database account with only the permissions the application needs.
-- Use encrypted connections when connecting to a cloud database.
-- Do not expose production database credentials in screenshots, logs, or public documentation.
 
 ## 🗺️ Future Improvements
 
