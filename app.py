@@ -840,3 +840,4 @@ if question:
                             "role": "assistant",
                             "content": f"Error: {str(e)}"
                         })
+        st.rerun()                         
